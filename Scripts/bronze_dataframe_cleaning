@@ -1,0 +1,25 @@
+#product_dataframe (no cleaning required)
+product_silver=product
+
+#customer_dataframe
+from pyspark.sql.functions import trim,col,to_date
+customer=customer.withColumn('first_name',col=trim(customer.first_name))
+customer.show(n=5)
+customer=customer.fillna('NA')
+customer=customer.withColumn('signup_date',to_date(customer.signup_date,'dd/MM/yyyy'))
+customer_silver=customer
+customer_silver.show()
+
+#orders_dataframe
+from pyspark.sql.functions import trim,col,to_date,date_format
+orders=orders.withColumn('order_date',date_format(orders.order_date,'dd/MM/yyyy'))
+orders=orders.fillna("NA")
+orders_silver=orders
+orders_silver.show()
+
+#payment_dataframe
+payment=payment.withColumn('payment_date1',date_format(payment.payment_date,'dd/MM/yyyy'))
+payment=payment.fillna("NA")
+payment=payment.drop('payment_date')
+payment_silver=payment
+payment_silver.show(n=5)
