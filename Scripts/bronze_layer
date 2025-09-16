@@ -1,0 +1,5 @@
+## Creating bronze layer
+customer.write.mode("overwrite").option("header",True).option("path", "hdfs://localhost:50000/bronze/customer_details").saveAsTable("bronze.customer_details")
+product.write.mode("overwrite").option("header",True).option("path", "hdfs://localhost:50000/bronze/customer_details").saveAsTable("bronze.product_details")
+orders.write.mode("overwrite").option("header",True).option("path", "hdfs://localhost:50000/bronze/customer_details").saveAsTable("bronze.order_details")
+payment.write.mode("overwrite").option("header",True).option("path", "hdfs://localhost:50000/bronze/customer_details").saveAsTable("bronze.payment_details")
