@@ -1,0 +1,30 @@
+## Initializing spark session with HIVE connection
+from pyspark.sql import SparkSession
+
+spark = (SparkSession.builder
+         .appName("HiveIntegration")
+         .enableHiveSupport()
+         .config("spark.sql.catalogImplementation", "hive")
+         .config("spark.sql.warehouse.dir", "/user/hive/warehouse")  # HDFS warehouse
+         .config("spark.driver.extraClassPath", "/home/aravinth/apache-hive-2.3.5-bin/lib/mysql-connector-java-8.0.19.jar") 
+         .config("spark.hadoop.fs.defaultFS", "hdfs://localhost:50000")
+         .getOrCreate())
+
+
+spark.sql("show databases").show() #ensure connection is established
+## Reading files from HDFS
+customer=spark.read.csv(path="hdfs://Aravinth2005:50000/user/aravinth/customer_details.csv",header=True,inferSchema=True)
+product=spark.read.csv(path="hdfs://Aravinth2005:50000/user/aravinth/product_details.csv",header=True,inferSchema=True)
+orders=spark.read.csv(path="hdfs://Aravinth2005:50000/user/aravinth/order_details.csv",header=True,inferSchema=True)
+payment=spark.read.csv(path="hdfs://Aravinth2005:50000/user/aravinth/payment_details.csv",header=True,inferSchema=True)
+## Checking the dataframes
+customer.show(n=5)
+product.show(n=5)
+orders.show(n=5)
+payment.show(n=5)
+## Creating schemas in HIVE
+spark.sql("create schema bronze")
+spark.sql("create schema silver")
+spark.sql("create schema gold")
+
+
