@@ -1,0 +1,7 @@
+customer_silver.write.mode("overwrite").option("header",True).option("path", "hdfs://localhost:50000/gold/customer_details").saveAsTable("gold.dim_customer_details")
+
+product_silver.write.mode("overwrite").option("header",True).option("path", "hdfs://localhost:50000/gold/product_details").saveAsTable("gold.dim_product_details")
+
+orders_silver.write.mode("overwrite").option("header",True).option("path", "hdfs://localhost:50000/gold/orders_details").saveAsTable("gold.fact_order_details")
+
+payment_silver.write.mode('overwrite').option('header',True).option("path", "hdfs://localhost:50000/gold/payment_details").saveAsTable("gold.fact_payment_details")
