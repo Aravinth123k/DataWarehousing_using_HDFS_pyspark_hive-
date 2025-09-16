@@ -1,0 +1,49 @@
+##product_dataframe   (NO QUALITY ISSUES)
+from pyspark.sql.functions import trim
+product.show(n=5)
+spark.sql("select count(*) from bronze.product_details group by product_id having count(*)>1 or product_id is null").show()
+product.select(product.product_name).where(trim(product.product_name)!=product.product_name).show()
+product.select(product.category).where(trim(product.category)!=product.category).show()
+product.filter(product.price<0).show()
+product.dropDuplicates().count()
+product.filter(product.product_name.isNull()).show()
+product.filter(product.category.isNull()).show()
+product.filter(product.price.isNull()).show()
+product.filter(product.stock_qty.isNull()).show()
+
+#customer_dataframe
+customer.show(n=5)
+from pyspark.sql.functions import trim,year
+spark.sql("select count(*) from bronze.customer_details group by customer_id having count(*)>1 or customer_id is null").show()
+customer.select(customer.first_name).where(trim(customer.first_name)!=customer.first_name).show()
+customer.select(customer.last_name).where(trim(customer.last_name)!=customer.last_name).show()
+customer.select(customer.email).where(trim(customer.email)!=customer.email).show()
+customer.select(customer.country).where(trim(customer.country)!=customer.country).show()
+customer.filter(customer.first_name.isNull()).show()
+customer.filter(customer.last_name.isNull()).show()
+customer.select(year(customer.signup_date)).distinct().show()
+
+#order_dataframe
+orders.show(n=5)
+from pyspark.sql.functions import trim,year
+spark.sql("select count(*) from bronze.order_details group by order_id having count(*)>1 or order_id is null").show()
+orders.select(orders.order_id).where(trim(orders.order_id)!=orders.order_id).show()
+orders.select(orders.customer_id).where(trim(orders.customer_id)!=orders.customer_id).show()
+orders.select(orders.product_id).where(trim(orders.product_id)!=orders.product_id).show()
+orders.select(orders.status).where(trim(orders.status)!=orders.status).show()
+orders.select(year(orders.order_date)).distinct().show()
+orders.select(orders.status).distinct().show()
+
+#payment_dataframe
+payment.show(n=5)
+from pyspark.sql.functions import trim,year
+spark.sql("select count(*) from bronze.payment_details group by payment_id having count(*)>1 or payment_id is null").show()
+payment.select('payment_id').where(trim(payment.payment_id)!=payment.payment_id).show()
+payment.select('order_id').where(trim(payment.order_id)!=payment.order_id).show()
+payment.select('payment_method').where(trim(payment.payment_method)!=payment.payment_method).show()
+payment.select('currency').where(trim(payment.currency)!=payment.currency).show()
+payment.select('payment_method').distinct().show()
+payment.select(year('payment_date')).distinct().show()
+payment.select('amount').where(payment.amount<0).show()
+
+
