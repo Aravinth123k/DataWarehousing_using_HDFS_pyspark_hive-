@@ -1,0 +1,7 @@
+product_silver.write.mode("overwrite").option("header",True).option("path", "hdfs://localhost:50000/silver/customer_details").saveAsTable("silver.product_details")
+
+customer_silver.write.mode("overwrite").option("header",True).option("path", "hdfs://localhost:50000/silver/customer_details").saveAsTable("silver.customer_details")
+
+orders_silver.write.mode("overwrite").option("header",True).option("path", "hdfs://localhost:50000/silver/customer_details").saveAsTable("silver.order_details")
+
+payment_silver.write.mode('overwrite').option('header',True).option("path", "hdfs://localhost:50000/silver/customer_details").saveAsTable("silver.payment_details")
